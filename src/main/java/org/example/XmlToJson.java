@@ -1,3 +1,5 @@
+package org.example;
+
 import City.District;
 import City.Entrance;
 import City.House;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XmlToJson {
-    public static void convert(String fileName){
+    public static List<District> convert(String fileName){
         File xmlFile = new File(fileName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
@@ -21,30 +23,32 @@ public class XmlToJson {
             builder = factory.newDocumentBuilder();
             Document document = builder.parse(xmlFile);
             document.getDocumentElement().normalize();
-            // получаем узлы с именем Language
-            // теперь XML полностью загружен в память
-            // в виде объекта Document
+
             NodeList nodeList = document.getElementsByTagName("district");
 
-            // создадим из него список объектов Language
-            List<District> langList = new ArrayList<District>();
+            List<District> districts = new ArrayList<District>();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                langList.add(getDistrict(nodeList.item(i)));
+                districts.add(getDistrict(nodeList.item(i)));
             }
+
+            return districts;
         }
          catch (Exception exc) {
              exc.printStackTrace();
         }
+
+        return null;
     }
 
     private static District getDistrict(Node node) {
         District district = new District();
         if (node.getNodeType() == Node.ELEMENT_NODE) {
-            NodeList nodeList = .getElementsByTagName("house");
+            NodeList nodeList = node.getChildNodes();
 
             List<House> housesList = new ArrayList<House>();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                housesList.add(getHouse(nodeList.item(i)));
+                if (nodeList.item(i).getNodeName() == "house")
+                    housesList.add(getHouse(nodeList.item(i)));
             }
 
             district.setHouses(housesList);
@@ -59,11 +63,12 @@ public class XmlToJson {
     private static House getHouse(Node node) {
         House house = new House();
         if (node.getNodeType() == Node.ELEMENT_NODE) {
-            NodeList nodeList = doc.getElementsByTagName("entrance");
+            NodeList nodeList = node.getChildNodes();
 
             List<Entrance> entrancesList = new ArrayList<Entrance>();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                entrancesList.add(getEntrance(nodeList.item(i)));
+                if (nodeList.item(i).getNodeName() == "entrance")
+                    entrancesList.add(getEntrance(nodeList.item(i)));
             }
             house.setEntrances(entrancesList);
 
