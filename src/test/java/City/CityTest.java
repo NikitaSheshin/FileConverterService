@@ -92,16 +92,16 @@ public class CityTest {
         houses.add(new House());
         houses.add(new House());
 
-        District district1 = new District("Ленинсий", houses);
+        District district1 = new District("Ленинский", houses);
         District district2 = new District();
 
         district2.setName("Ленинский");
         district2.setHouses(houses);
 
         Assert.assertEquals("Ленинский", district1.getName());
-        Assert.assertEquals("java.util.ArrayList", district1.getName());
+        Assert.assertEquals("java.util.ArrayList", district1.getHouses().getClass().getName());
 
         Assert.assertEquals("Ленинский", district2.getName());
-        Assert.assertEquals("java.util.ArrayList", district2.getName());
+        Assert.assertEquals("java.util.ArrayList", district2.getHouses().getClass().getName());
     }
 }
