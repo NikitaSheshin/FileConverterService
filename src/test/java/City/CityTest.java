@@ -72,4 +72,36 @@ public class CityTest {
         Assert.assertEquals(3, house2.getNumber());
         Assert.assertEquals("java.util.ArrayList", house2.getEntrances().getClass().getName());
     }
+
+    @Test
+    public void CheckDistrictConstructor(){
+        District district1 = new District();
+
+        List<House> houses = new ArrayList<>();
+        houses.add(new House());
+        houses.add(new House());
+        District district2 = new District("Ленинсий", houses);
+
+        Assert.assertNotNull(district1);
+        Assert.assertNotNull(district2);
+    }
+
+    @Test
+    public void CheckDistrictGetters(){
+        List<House> houses = new ArrayList<>();
+        houses.add(new House());
+        houses.add(new House());
+
+        District district1 = new District("Ленинсий", houses);
+        District district2 = new District();
+
+        district2.setName("Ленинский");
+        district2.setHouses(houses);
+
+        Assert.assertEquals("Ленинский", district1.getName());
+        Assert.assertEquals("java.util.ArrayList", district1.getName());
+
+        Assert.assertEquals("Ленинский", district2.getName());
+        Assert.assertEquals("java.util.ArrayList", district2.getName());
+    }
 }
