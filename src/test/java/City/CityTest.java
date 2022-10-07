@@ -58,8 +58,8 @@ public class CityTest {
 
         House house1 = new House("Советская", 54, entrs);
 
-        Assert.assertEquals(1, house1.getStreet());
-        Assert.assertEquals(1, house1.getNumber());
+        Assert.assertEquals("Советская", house1.getStreet());
+        Assert.assertEquals(54, house1.getNumber());
         Assert.assertEquals("java.util.ArrayList", house1.getEntrances().getClass().getName());
 
         House house2 = new House();
