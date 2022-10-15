@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database>
+	<district>
+		<name>Ленинский</name>
+		<house id="0">
+			<street>Советская</street>
+			<number>22</number>
+			<entrance id="0">
+				<countOfFlats>33</countOfFlats>
+				<countOfCitizens>15</countOfCitizens>
+				<debt>100000</debt></entrance>
+			<entrance id="1">
+<countOfFlats>33</countOfFlats><countOfCitizens>65</countOfCitizens><debt>4500000</debt></entrance></house><house id="1"><street>Ломоносова</street><number>66</number><entrance id="0"><countOfFlats>30</countOfFlats><countOfCitizens>56</countOfCitizens><debt>10000</debt></entrance><entrance id="1"><countOfFlats>28</countOfFlats><countOfCitizens>54</countOfCitizens><debt>450</debt></entrance></house></district></database>
