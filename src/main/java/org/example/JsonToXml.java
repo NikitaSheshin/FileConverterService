@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonToXml {
-    public static void convert(String fileName){
+    public static void convert(String fileName, String resFileName){
         var districts = readJsonFromFile(fileName);
 
         DocumentBuilderFactory dbf;
@@ -62,7 +62,7 @@ public class JsonToXml {
         }
         src = new DOMSource(doc);
         try {
-            fos = new FileOutputStream("xmlRes.txt");
+            fos = new FileOutputStream(resFileName);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

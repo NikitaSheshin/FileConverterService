@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XmlToJson {
-    public static List<District> convert(String fileName){
+    public static void convert(String fileName, String resFileName){
         var districts = readFromXML(fileName);
 
         JSONArray districtJson = new JSONArray();
@@ -32,12 +32,10 @@ public class XmlToJson {
             resultJson.put("district", districtJson);
 
         try {
-            Files.write(Paths.get("json.txt"), resultJson.toJSONString().getBytes());
+            Files.write(Paths.get(resFileName), resultJson.toJSONString().getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return districts;
     }
 
     private static JSONObject createJsonDistrict(District district){
