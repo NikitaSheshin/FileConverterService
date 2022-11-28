@@ -17,22 +17,12 @@ import java.util.List;
 public class JsonReader implements Reader{
     @Override
     public List<District> readFromFile(String fileName) {
-        JSONParser parser = new JSONParser();
-        FileReader reader = null;
-        try {
-            reader = new FileReader(fileName);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = (JSONObject) parser.parse(reader);
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        FileReader reader = createFileReader(fileName);
+        JSONObject jsonObject = createJsonObjectFromFile(reader);
 
         JSONArray districtsJson = (JSONArray) jsonObject.get("district");
+
         List<District> districts = new ArrayList<>();
 
         for (var district : districtsJson){
@@ -40,6 +30,23 @@ public class JsonReader implements Reader{
         }
 
         return districts;
+    }
+
+    private FileReader createFileReader(String fileName){
+        try {
+            return new FileReader(fileName);
+        } catch (FileNotFoundException fileNotFoundException) {
+            throw new RuntimeException(fileNotFoundException);
+        }
+    }
+
+    private JSONObject createJsonObjectFromFile(FileReader reader){
+        JSONParser parser = new JSONParser();
+        try {
+            return (JSONObject) parser.parse(reader);
+        } catch (IOException | ParseException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     private District getDistrict(JSONObject districtJson){

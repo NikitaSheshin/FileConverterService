@@ -20,37 +20,29 @@ import java.util.List;
 public class WriterToXml implements Writer{
     @Override
     public void writeToFile(String fileName, List<District> districts) {
-        Document doc;
-        try {
-            doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-
-        Element root = doc.createElement("database");
+        Document jsonDocument = createDocument();
+        Element root = jsonDocument.createElement("database");
 
         for (var district : districts){
-            root.appendChild(createDistrict(district, doc));
+            root.appendChild(createDistrict(district, jsonDocument));
         }
 
-        doc.appendChild(root);
+        jsonDocument.appendChild(root);
+        DOMSource src = new DOMSource(jsonDocument);
 
-        DOMSource src = new DOMSource(doc);
+        StreamResult result = creatStreamResult(fileName);
+        saveResult(result, src);
+    }
 
-        StreamResult result;
+    private Document createDocument(){
         try {
-            result = new StreamResult(new FileOutputStream(fileName));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            TransformerFactory.newInstance().newTransformer().transform(src, result);
-        } catch (TransformerException e) {
+            return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static Node createDistrict(District district, Document doc){
+    private Node createDistrict(District district, Document doc){
 
         Element districtNode = doc.createElement("district");
         Element name = doc.createElement("name");
@@ -64,7 +56,7 @@ public class WriterToXml implements Writer{
         return districtNode;
     }
 
-    private static Node createHouse(House house, int id, Document doc){
+    private Node createHouse(House house, int id, Document doc){
         Element houseNode = doc.createElement("house");
         houseNode.setAttribute("id", String.valueOf(id));
 
@@ -84,7 +76,7 @@ public class WriterToXml implements Writer{
         return houseNode;
     }
 
-    private static Node createEntrance(Entrance entrance, int id, Document doc){
+    private Node createEntrance(Entrance entrance, int id, Document doc){
         Element entranceNode = doc.createElement("entrance");
         entranceNode.setAttribute("id", String.valueOf(id));
 
@@ -102,5 +94,21 @@ public class WriterToXml implements Writer{
         entranceNode.appendChild(debt);
 
         return entranceNode;
+    }
+
+    private StreamResult creatStreamResult(String fileName){
+        try {
+            return new StreamResult(new FileOutputStream(fileName));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void saveResult(StreamResult result, DOMSource src){
+        try {
+            TransformerFactory.newInstance().newTransformer().transform(src, result);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
