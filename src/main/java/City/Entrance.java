@@ -1,13 +1,12 @@
 package City;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Entrance {
     int countOfCitizens;
     int countOfFlats;

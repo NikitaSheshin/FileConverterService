@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CityTest {
     @Test
-    public void CheckEntranceContructor(){
+    public void CheckEntranceContructor() {
         Entrance entrance1 = new Entrance();
         Entrance entrance2 = new Entrance(1, 1 ,1);
 
@@ -17,7 +17,7 @@ public class CityTest {
     }
 
     @Test
-    public void CheckEntranceGetters(){
+    public void CheckEntranceGetters() {
         Entrance entrance1 = new Entrance(1, 1 ,1);
 
         Assert.assertEquals(1, entrance1.getCountOfCitizens());
@@ -38,7 +38,7 @@ public class CityTest {
 
 
     @Test
-    public void CheckHouseContructor(){
+    public void CheckHouseContructor() {
         House house1 = new House();
         List<Entrance> entrs = new ArrayList<>();
         entrs.add(new Entrance());
@@ -50,7 +50,7 @@ public class CityTest {
     }
 
     @Test
-    public void CheckHouseGetters(){
+    public void CheckHouseGetters() {
         List<Entrance> entrs = new ArrayList<>();
         entrs.add(new Entrance());
         entrs.add(new Entrance(1, 2 ,3));
@@ -74,7 +74,7 @@ public class CityTest {
     }
 
     @Test
-    public void CheckDistrictConstructor(){
+    public void CheckDistrictConstructor() {
         District district1 = new District();
 
         List<House> houses = new ArrayList<>();
