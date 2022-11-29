@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class WriterToJson implements Writer{
+public class WriterToJson implements Writer {
     @Override
     public void writeToFile(String fileName, List<District> districts) {
         JSONArray districtJson = new JSONArray();
@@ -27,14 +27,14 @@ public class WriterToJson implements Writer{
         writeJsonObjectToFile(fileName, resultJson);
     }
 
-    private JSONObject createJsonDistrict(District district){
+    private JSONObject createJsonDistrict(District district) {
         JSONObject districtJson = new JSONObject();
 
         districtJson.put("name", district.getName());
 
         JSONArray houses = new JSONArray();
 
-        for(int i = 0; i < district.getHouses().size(); ++i){
+        for(int i = 0; i < district.getHouses().size(); ++i) {
             houses.add(createJsonHouse(district.getHouses().get(i), i));
         }
 
@@ -43,7 +43,7 @@ public class WriterToJson implements Writer{
         return districtJson;
     }
 
-    private JSONObject createJsonHouse(House house, int id){
+    private JSONObject createJsonHouse(House house, int id) {
         JSONObject houseJson = new JSONObject();
 
         houseJson.put("street", house.getStreet());
@@ -55,7 +55,7 @@ public class WriterToJson implements Writer{
 
         JSONArray entrances = new JSONArray();
 
-        for(int i = 0; i < house.getEntrances().size(); ++i){
+        for(int i = 0; i < house.getEntrances().size(); ++i) {
             entrances.add(createJsonEntrance(house.getEntrances().get(i), i));
         }
 
@@ -64,7 +64,7 @@ public class WriterToJson implements Writer{
         return houseJson;
     }
 
-    private JSONObject createJsonEntrance(Entrance entrance, int id){
+    private JSONObject createJsonEntrance(Entrance entrance, int id) {
         JSONObject entranceJson = new JSONObject();
 
         entranceJson.put("countOfCitizens", entrance.getCountOfCitizens());
@@ -78,7 +78,7 @@ public class WriterToJson implements Writer{
         return entranceJson;
     }
 
-    private void writeJsonObjectToFile(String resFileName, JSONObject resultJson){
+    private void writeJsonObjectToFile(String resFileName, JSONObject resultJson) {
         try {
             Files.write(Paths.get(resFileName), resultJson.toJSONString().getBytes());
         } catch (IOException e) {

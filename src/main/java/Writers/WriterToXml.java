@@ -17,13 +17,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class WriterToXml implements Writer{
+public class WriterToXml implements Writer {
     @Override
     public void writeToFile(String fileName, List<District> districts) {
         Document jsonDocument = createDocument();
         Element root = jsonDocument.createElement("database");
 
-        for (var district : districts){
+        for (var district : districts) {
             root.appendChild(createDistrict(district, jsonDocument));
         }
 
@@ -34,7 +34,7 @@ public class WriterToXml implements Writer{
         saveResult(result, src);
     }
 
-    private Document createDocument(){
+    private Document createDocument() {
         try {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
         } catch (ParserConfigurationException e) {
@@ -42,21 +42,20 @@ public class WriterToXml implements Writer{
         }
     }
 
-    private Node createDistrict(District district, Document doc){
-
+    private Node createDistrict(District district, Document doc) {
         Element districtNode = doc.createElement("district");
         Element name = doc.createElement("name");
         name.setTextContent(district.getName());
         districtNode.appendChild(name);
 
-        for(int i = 0; i < district.getHouses().size(); ++i){
+        for(int i = 0; i < district.getHouses().size(); ++i) {
             districtNode.appendChild(createHouse(district.getHouses().get(i), i, doc));
         }
 
         return districtNode;
     }
 
-    private Node createHouse(House house, int id, Document doc){
+    private Node createHouse(House house, int id, Document doc) {
         Element houseNode = doc.createElement("house");
         houseNode.setAttribute("id", String.valueOf(id));
 
@@ -76,7 +75,7 @@ public class WriterToXml implements Writer{
         return houseNode;
     }
 
-    private Node createEntrance(Entrance entrance, int id, Document doc){
+    private Node createEntrance(Entrance entrance, int id, Document doc) {
         Element entranceNode = doc.createElement("entrance");
         entranceNode.setAttribute("id", String.valueOf(id));
 
@@ -96,7 +95,7 @@ public class WriterToXml implements Writer{
         return entranceNode;
     }
 
-    private StreamResult creatStreamResult(String fileName){
+    private StreamResult creatStreamResult(String fileName) {
         try {
             return new StreamResult(new FileOutputStream(fileName));
         } catch (FileNotFoundException e) {
@@ -104,7 +103,7 @@ public class WriterToXml implements Writer{
         }
     }
 
-    private void saveResult(StreamResult result, DOMSource src){
+    private void saveResult(StreamResult result, DOMSource src) {
         try {
             TransformerFactory.newInstance().newTransformer().transform(src, result);
         } catch (TransformerException e) {

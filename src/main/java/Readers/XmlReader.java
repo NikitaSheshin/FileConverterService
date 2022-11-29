@@ -15,7 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.*;
 
-public class XmlReader implements Reader{
+public class XmlReader implements Reader {
     @Override
     public List<District> readFromFile(String fileName) {
         Document document = createDocument(fileName);
@@ -29,13 +29,13 @@ public class XmlReader implements Reader{
         return districts;
     }
 
-    private Document createDocument(String fileName){
+    private Document createDocument(String fileName) {
         Document document = initDocument(fileName);
         document.getDocumentElement().normalize();
         return document;
     }
 
-    private DocumentBuilder createDocumentBuilder(){
+    private DocumentBuilder createDocumentBuilder() {
         try {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder();
         } catch (ParserConfigurationException parserConfigurationException) {
@@ -83,8 +83,9 @@ public class XmlReader implements Reader{
 
             List<Entrance> entrancesList = new ArrayList<>();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                if (nodeList.item(i).getNodeName().equals("entrance"))
+                if (nodeList.item(i).getNodeName().equals("entrance")) {
                     entrancesList.add(getEntrance(nodeList.item(i)));
+                }
             }
             house.setEntrances(entrancesList);
 

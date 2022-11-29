@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonReader implements Reader{
+public class JsonReader implements Reader {
     @Override
     public List<District> readFromFile(String fileName) {
 
@@ -25,14 +25,14 @@ public class JsonReader implements Reader{
 
         List<District> districts = new ArrayList<>();
 
-        for (var district : districtsJson){
+        for (var district : districtsJson) {
             districts.add(getDistrict((JSONObject) district));
         }
 
         return districts;
     }
 
-    private FileReader createFileReader(String fileName){
+    private FileReader createFileReader(String fileName) {
         try {
             return new FileReader(fileName);
         } catch (FileNotFoundException fileNotFoundException) {
@@ -40,7 +40,7 @@ public class JsonReader implements Reader{
         }
     }
 
-    private JSONObject createJsonObjectFromFile(FileReader reader){
+    private JSONObject createJsonObjectFromFile(FileReader reader) {
         JSONParser parser = new JSONParser();
         try {
             return (JSONObject) parser.parse(reader);
@@ -49,14 +49,14 @@ public class JsonReader implements Reader{
         }
     }
 
-    private District getDistrict(JSONObject districtJson){
+    private District getDistrict(JSONObject districtJson) {
         District district = new District();
 
         district.setName(districtJson.get("name").toString());
         List<House> houses = new ArrayList<>();
         JSONArray housesJson = (JSONArray) districtJson.get("house");
 
-        for(var house : housesJson){
+        for(var house : housesJson) {
             houses.add(getHouse((JSONObject)house));
         }
 
@@ -65,7 +65,7 @@ public class JsonReader implements Reader{
         return district;
     }
 
-    private House getHouse(JSONObject houseJson){
+    private House getHouse(JSONObject houseJson) {
         House house = new House();
 
         house.setStreet(houseJson.get("street").toString());
@@ -74,7 +74,7 @@ public class JsonReader implements Reader{
         List<Entrance> entrances = new ArrayList<>();
         JSONArray entrancesJson = (JSONArray) houseJson.get("entrance");
 
-        for (var entrance : entrancesJson){
+        for (var entrance : entrancesJson) {
             entrances.add(getEntrance((JSONObject) entrance));
         }
 
@@ -83,7 +83,7 @@ public class JsonReader implements Reader{
         return house;
     }
 
-    private Entrance getEntrance(JSONObject entranceJson){
+    private Entrance getEntrance(JSONObject entranceJson) {
         Entrance entrance = new Entrance();
 
         entrance.setCountOfCitizens(Integer.parseInt(entranceJson.get("countOfCitizens").toString()));
