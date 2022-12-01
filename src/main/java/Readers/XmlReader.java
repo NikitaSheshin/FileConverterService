@@ -9,47 +9,68 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class XmlReader implements Reader {
+    private final static Logger logger = Logger.getLogger(XmlReader.class.getName());
+
     @Override
     public List<District> readFromFile(String fileName) {
         Document document = createDocument(fileName);
-        NodeList nodeList = document.getElementsByTagName("district");
+        NodeList nodeList = tryToGetNodeListFromDocument(document);
+        logger.log(Level.INFO, "Файл открыт");
 
         List<District> districts = new ArrayList<>();
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            districts.add(getDistrict(nodeList.item(i)));
+        for (int currentNodeIndex = 0; currentNodeIndex < nodeList.getLength(); currentNodeIndex++) {
+            districts.add(getDistrict(nodeList.item(currentNodeIndex)));
         }
+        logger.log(Level.INFO, "Данные записаны в List");
 
         return districts;
     }
 
     private Document createDocument(String fileName) {
-        Document document = initDocument(fileName);
-        document.getDocumentElement().normalize();
-        return document;
-    }
-
-    private DocumentBuilder createDocumentBuilder() {
         try {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            return initDocument(fileName);
+        } catch (IOException ioException) {
+            logger.log(Level.WARNING, "Ошибка при открытии файла ", ioException);
+        } catch (SAXException saxException) {
+            logger.log(Level.WARNING, "Ошибка при интерпритации xml ", saxException);
         } catch (ParserConfigurationException parserConfigurationException) {
-            throw new RuntimeException(parserConfigurationException);
+            logger.log(Level.WARNING, "Ошибка конфигурации", parserConfigurationException);
         }
+        return null;
     }
 
-    private Document initDocument(String fileName){
+    private Document initDocument(String fileName) throws SAXException, ParserConfigurationException, IOException {
         File xmlFile = new File(fileName);
+        return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
+    }
+
+    private NodeList tryToGetNodeListFromDocument(Document document) {
         try {
-            return createDocumentBuilder().parse(xmlFile);
-        } catch (SAXException | IOException exception) {
-            throw new RuntimeException(exception);
+            return document.getElementsByTagName("district");
         }
+        catch (NullPointerException nullPointerException) {
+            logger.log(Level.INFO, "Не получилось открыть документ", nullPointerException);
+        }
+
+        return new NodeList() {
+            @Override
+            public Node item(int index) {
+                return null;
+            }
+
+            @Override
+            public int getLength() {
+                return 0;
+            }
+        };
     }
 
     private District getDistrict(Node node) {
@@ -58,9 +79,10 @@ public class XmlReader implements Reader {
             NodeList nodeList = node.getChildNodes();
 
             List<House> housesList = new ArrayList<>();
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                if (nodeList.item(i).getNodeName().equals("house"))
-                    housesList.add(getHouse(nodeList.item(i)));
+            for (int currentNodeIndex = 0; currentNodeIndex < nodeList.getLength(); currentNodeIndex++) {
+                if (isHouseNode(nodeList.item(currentNodeIndex))) {
+                    housesList.add(getHouse(nodeList.item(currentNodeIndex)));
+                }
             }
 
             district.setHouses(housesList);
@@ -72,8 +94,12 @@ public class XmlReader implements Reader {
         return district;
     }
 
-    private Boolean isElementNode(Node node){
+    private Boolean isElementNode(Node node) {
         return node.getNodeType() == Node.ELEMENT_NODE;
+    }
+
+    private Boolean isHouseNode(Node node) {
+        return node.getNodeName().equals("house");
     }
 
     private House getHouse(Node node) {
@@ -83,27 +109,29 @@ public class XmlReader implements Reader {
 
             List<Entrance> entrancesList = new ArrayList<>();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                if (nodeList.item(i).getNodeName().equals("entrance")) {
+                if (isEntranceNode(nodeList.item(i))) {
                     entrancesList.add(getEntrance(nodeList.item(i)));
                 }
             }
             house.setEntrances(entrancesList);
 
-            Element element = (Element) node;
-            house.setStreet(getTagValue("street", element));
-            house.setNumber(Integer.parseInt(getTagValue("number", element)));
+            house.setStreet(getTagValue("street", (Element) node));
+            house.setNumber(Integer.parseInt(getTagValue("number", (Element) node)));
         }
 
         return house;
     }
 
+    private Boolean isEntranceNode(Node node) {
+        return node.getNodeName().equals("entrance");
+    }
+
     private Entrance getEntrance(Node node) {
         Entrance entrance = new Entrance();
         if (isElementNode(node)) {
-            Element element = (Element) node;
-            entrance.setCountOfCitizens(Integer.parseInt(getTagValue("countOfCitizens", element)));
-            entrance.setCountOfFlats(Integer.parseInt(getTagValue("countOfFlats", element)));
-            entrance.setDebt(Integer.parseInt(getTagValue("debt", element)));
+            entrance.setCountOfCitizens(Integer.parseInt(getTagValue("countOfCitizens", (Element) node)));
+            entrance.setCountOfFlats(Integer.parseInt(getTagValue("countOfFlats", (Element) node)));
+            entrance.setDebt(Integer.parseInt(getTagValue("debt", (Element) node)));
         }
 
         return entrance;
