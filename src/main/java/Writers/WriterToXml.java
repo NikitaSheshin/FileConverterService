@@ -3,6 +3,7 @@ package Writers;
 import City.District;
 import City.Entrance;
 import City.House;
+import Readers.XmlReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,98 +17,100 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WriterToXml implements Writer {
+    private final static Logger logger = Logger.getLogger(XmlReader.class.getName());
+    private Document xmlDocument;
+
     @Override
     public void writeToFile(String fileName, List<District> districts) {
-        Document jsonDocument = createDocument();
-        Element root = jsonDocument.createElement("database");
+        createDocument();
+        Element root = xmlDocument.createElement("districts");
 
         for (var district : districts) {
-            root.appendChild(createDistrict(district, jsonDocument));
+            root.appendChild(createDistrict(district));
         }
 
-        jsonDocument.appendChild(root);
-        DOMSource src = new DOMSource(jsonDocument);
+        xmlDocument.appendChild(root);
+        DOMSource src = new DOMSource(xmlDocument);
 
         StreamResult result = creatStreamResult(fileName);
         saveResult(result, src);
     }
 
-    private Document createDocument() {
+    private void createDocument() {
         try {
-            return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
+            tryToCreateDocument();
+        } catch (ParserConfigurationException parserConfigurationException) {
+            logger.log(Level.INFO, "Ошибка конфигурации ", parserConfigurationException);
         }
     }
 
-    private Node createDistrict(District district, Document doc) {
-        Element districtNode = doc.createElement("district");
-        Element name = doc.createElement("name");
-        name.setTextContent(district.getName());
-        districtNode.appendChild(name);
+    private void tryToCreateDocument() throws ParserConfigurationException {
+        xmlDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+    }
 
-        for(int i = 0; i < district.getHouses().size(); ++i) {
-            districtNode.appendChild(createHouse(district.getHouses().get(i), i, doc));
+    private Node createDistrict(District district) {
+        Element districtNode = xmlDocument.createElement("district");
+        districtNode.appendChild(createElementWithTextContent("name", district.getName()));
+
+        for(int currentHouseIndex = 0; currentHouseIndex < district.getHouses().size(); ++currentHouseIndex) {
+            districtNode.appendChild(createHouse(district.getHouses()
+                    .get(currentHouseIndex)));
         }
 
         return districtNode;
     }
 
-    private Node createHouse(House house, int id, Document doc) {
-        Element houseNode = doc.createElement("house");
-        houseNode.setAttribute("id", String.valueOf(id));
+    private Node createHouse(House house) {
+        Element houseNode = xmlDocument.createElement("house");
 
-        Element street = doc.createElement("street");
-        street.setTextContent(house.getStreet());
+        houseNode.appendChild(createElementWithTextContent("street", house.getStreet()));
+        houseNode.appendChild(createElementWithTextContent("number", String.valueOf(house.getNumber())));
 
-        Element number = doc.createElement("number");
-        number.setTextContent(String.valueOf(house.getNumber()));
-
-        houseNode.appendChild(street);
-        houseNode.appendChild(number);
-
-        for(int i = 0; i < house.getEntrances().size(); ++i) {
-            houseNode.appendChild(createEntrance(house.getEntrances().get(i), i, doc));
+        for(int currentEntranceIndex = 0; currentEntranceIndex < house.getEntrances().size(); ++currentEntranceIndex) {
+            houseNode.appendChild(createEntrance(house.getEntrances()
+                    .get(currentEntranceIndex)));
         }
 
         return houseNode;
     }
 
-    private Node createEntrance(Entrance entrance, int id, Document doc) {
-        Element entranceNode = doc.createElement("entrance");
-        entranceNode.setAttribute("id", String.valueOf(id));
+    private Node createEntrance(Entrance entrance) {
+        Element entranceNode = xmlDocument.createElement("entrance");
 
-        Element countOfFlats = doc.createElement("countOfFlats");
-        countOfFlats.setTextContent(String.valueOf(entrance.getCountOfFlats()));
-
-        Element countOfCitizens = doc.createElement("countOfCitizens");
-        countOfCitizens.setTextContent(String.valueOf(entrance.getCountOfCitizens()));
-
-        Element debt = doc.createElement("debt");
-        debt.setTextContent(String.valueOf(entrance.getDebt()));
-
-        entranceNode.appendChild(countOfFlats);
-        entranceNode.appendChild(countOfCitizens);
-        entranceNode.appendChild(debt);
+        entranceNode.appendChild(createElementWithTextContent("countOfFlats"
+                , String.valueOf(entrance.getCountOfFlats())));
+        entranceNode.appendChild(createElementWithTextContent("countOfCitizens"
+                , String.valueOf(entrance.getCountOfCitizens())));
+        entranceNode.appendChild(createElementWithTextContent("debt"
+                , String.valueOf(entrance.getDebt())));
 
         return entranceNode;
+    }
+
+    private Element createElementWithTextContent(String nameOfElement, String contentToElement) {
+        Element newElement = xmlDocument.createElement(nameOfElement);
+        newElement.setTextContent(contentToElement);
+        return newElement;
     }
 
     private StreamResult creatStreamResult(String fileName) {
         try {
             return new StreamResult(new FileOutputStream(fileName));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotFoundException fileNotFoundException) {
+            logger.log(Level.WARNING, "Не должно произойти, так как если файла нет должен создасться новый");
+            throw new RuntimeException(fileNotFoundException);
         }
     }
 
     private void saveResult(StreamResult result, DOMSource src) {
         try {
             TransformerFactory.newInstance().newTransformer().transform(src, result);
-        } catch (TransformerException e) {
-            throw new RuntimeException(e);
+        } catch (TransformerException transformerException) {
+            logger.log(Level.WARNING, "Ошибка при записи в файл", transformerException);
         }
     }
 }
