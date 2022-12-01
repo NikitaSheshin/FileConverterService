@@ -16,16 +16,20 @@ public class ReadersTests {
     @Test
     public void jaxbReaderTest() throws JAXBException, FileNotFoundException {
         Reader reader = new XmlReaderWithJaxb();
-
-        var dataFromFile = reader.readFromFile("A:\\untitled\\xml.xml");
+        var dataFromFile = reader.readFromFile("A:\\FileConverter\\xml.xml");
 
         assertEquals(dataFromFile.size(), 5);
     }
 
     @Test(expected = FileNotFoundException.class)
-    public void jaxbReaderWithWrongPath() {
+    public void jaxbReaderWithWrongPath() throws JAXBException, FileNotFoundException {
         Reader reader = new XmlReaderWithJaxb();
-
         var dataFromFile = reader.readFromFile("wrong path");
+    }
+
+    @Test(expected = JAXBException.class)
+    public void jaxbReaderWithBadStructure() throws JAXBException, FileNotFoundException {
+        Reader reader = new XmlReaderWithJaxb();
+        var dataFromFile = reader.readFromFile("A:\\FileConverter\\WrongXml.xml");
     }
 }
