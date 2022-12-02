@@ -7,6 +7,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface Reader {
-    List<District> readFromFile(String fileName) throws JAXBException, FileNotFoundException;
+    List<District> readFromFile(final String fileName) throws JAXBException, FileNotFoundException;
 }
 

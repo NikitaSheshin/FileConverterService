@@ -20,12 +20,12 @@ public class XmlReader implements Reader {
     private final static Logger logger = Logger.getLogger(XmlReader.class.getName());
 
     @Override
-    public List<District> readFromFile(String fileName) {
+    public List<District> readFromFile(final String fileName) {
         Document document = createDocument(fileName);
         NodeList nodeList = tryToGetNodeListFromDocument(document);
         logger.log(Level.INFO, "Файл открыт");
 
-        List<District> districts = new ArrayList<>();
+        final List<District> districts = new ArrayList<>();
         for (int currentNodeIndex = 0; currentNodeIndex < nodeList.getLength(); currentNodeIndex++) {
             districts.add(getDistrict(nodeList.item(currentNodeIndex)));
         }
@@ -87,8 +87,7 @@ public class XmlReader implements Reader {
 
             district.setHouses(housesList);
 
-            Element element = (Element) node;
-            district.setName(getTagValue("name", element));
+            district.setName(getTagValue("name", (Element) node));
         }
 
         return district;

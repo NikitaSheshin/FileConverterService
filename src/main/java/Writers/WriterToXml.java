@@ -4,6 +4,7 @@ import City.District;
 import City.Entrance;
 import City.House;
 import Readers.XmlReader;
+import lombok.val;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,11 +26,11 @@ public class WriterToXml implements Writer {
     private Document xmlDocument;
 
     @Override
-    public void writeToFile(String fileName, List<District> districts) {
+    public void writeToFile(final String fileName, final List<District> districts) {
         createDocument();
         Element root = xmlDocument.createElement("districts");
 
-        for (var district : districts) {
+        for (val district : districts) {
             root.appendChild(createDistrict(district));
         }
 
