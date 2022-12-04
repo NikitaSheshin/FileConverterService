@@ -1,7 +1,7 @@
-package Readers;
+package readers;
 
-import City.District;
-import City.DistrictsStore;
+import city.District;
+import city.DistrictsStore;
 import lombok.val;
 
 import javax.xml.bind.JAXBContext;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class XmlReaderWithJaxb implements Reader {
+public class XmlReader implements Reader {
     private final static Logger logger = Logger.getLogger(XmlReader.class.getName());
 
     public List<District> readFromFile(final String fileName) throws JAXBException, FileNotFoundException {
