@@ -15,11 +15,11 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class WritersTests {
-    private final static String PATH_TO_CORRECT_XML_FILE = "A:\\FileConverter\\CorrectXml.xml";
-    private final static String PATH_TO_RESULT_XML_FILE = "A:\\FileConverter\\ResultXmlForTest.xml";
+    private final static String PATH_TO_CORRECT_XML_FILE = "A:\\FileConverter\\files_for_tests\\CorrectXml.xml";
+    private final static String PATH_TO_RESULT_XML_FILE = "A:\\FileConverter\\files_for_tests\\ResultXmlForTest.xml";
 
-    private final static String PATH_TO_CORRECT_JSON_FILE = "A:\\FileConverter\\CorrectJson.json";
-    private final static String PATH_TO_RESULT_JSON_FILE = "A:\\FileConverter\\ResultJsonForTest.json";
+    private final static String PATH_TO_CORRECT_JSON_FILE = "A:\\FileConverter\\files_for_tests\\CorrectJson.json";
+    private final static String PATH_TO_RESULT_JSON_FILE = "A:\\FileConverter\\files_for_tests\\ResultJsonForTest.json";
 
     private final static int COUNT_OF_DISTRICTS_IN_CORRECT_FILE = 5;
 

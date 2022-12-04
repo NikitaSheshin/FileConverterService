@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
 public class ReadersTests {
     private Reader reader;
 
-    private final static String PATH_TO_CORRECT_XML_FILE = "A:\\FileConverter\\CorrectXml.xml";
-    private final static String PATH_TO_INCORRECT_XML_FILE = "A:\\FileConverter\\WrongXml.xml";
+    private final static String PATH_TO_CORRECT_XML_FILE = "A:\\FileConverter\\files_for_tests\\CorrectXml.xml";
+    private final static String PATH_TO_INCORRECT_XML_FILE = "A:\\FileConverter\\files_for_tests\\WrongXml.xml";
 
-    private final static String PATH_TO_CORRECT_JSON_FILE = "A:\\FileConverter\\CorrectJson.json";
-    private final static String PATH_TO_INCORRECT_JSON_FILE = "A:\\FileConverter\\WrongJson.json";
+    private final static String PATH_TO_CORRECT_JSON_FILE = "A:\\FileConverter\\files_for_tests\\CorrectJson.json";
+    private final static String PATH_TO_INCORRECT_JSON_FILE = "A:\\FileConverter\\files_for_tests\\WrongJson.json";
 
     private final static String WRONG_PATH = "wrong path";
     private final static int COUNT_OF_DISTRICTS_IN_CORRECT_FILE = 5;

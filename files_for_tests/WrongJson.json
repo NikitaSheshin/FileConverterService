@@ -1,0 +1,188 @@
+{
+  "districts": [
+    {
+      "name": "Ленинский",
+      "houses": [
+        
+          "number": 22,
+          "entrances": [
+            {
+              "countOfCitizens": 15,
+              "countOfFlats": 33,
+              "debt": 100000
+            },
+            {
+              "countOfCitizens": 65,
+              "countOfFlats": 33,
+              "debt": 4500000
+            }
+          ]
+        },
+        {
+          "street": "Ломоносова",
+          "number": 66,
+          "entrances": [
+            {
+              "countOfCitizens": 56,
+              "countOfFlats": 30,
+              "debt": 10000
+            },
+            {
+              "countOfCitizens": 54,
+              "countOfFlats": 28,
+              "debt": 450
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ленинский",
+      "houses": [
+        {
+          "street": "Советская",
+          "number": 22,
+          "entrances": [
+            {
+              "countOfCitizens": 15,
+              "countOfFlats": 33,
+              "debt": 100000
+            },
+            {
+              "countOfCitizens": 65,
+              "countOfFlats": 33,
+              "debt": 4500000
+            }
+          ]
+        },
+        {
+          "street": "Ломоносова",
+          "number": 66,
+          "entrances": [
+            {
+              "countOfCitizens": 56,
+              "countOfFlats": 30,
+              "debt": 10000
+            },
+            {
+              "countOfCitizens": 54,
+              "countOfFlats": 28,
+              "debt": 450
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ленинский",
+      "houses": [
+        {
+          "street": "Советская",
+          "number": 22,
+          "entrances": [
+            {
+              "countOfCitizens": 15,
+              "countOfFlats": 33,
+              "debt": 100000
+            },
+            {
+              "countOfCitizens": 65,
+              "countOfFlats": 33,
+              "debt": 4500000
+            }
+          ]
+        },
+        {
+          "street": "Ломоносова",
+          "number": 66,
+          "entrances": [
+            {
+              "countOfCitizens": 56,
+              "countOfFlats": 30,
+              "debt": 10000
+            },
+            {
+              "countOfCitizens": 54,
+              "countOfFlats": 28,
+              "debt": 450
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ленинский",
+      "houses": [
+        {
+          "street": "Советская",
+          "number": 22,
+          "entrances": [
+            {
+              "countOfCitizens": 15,
+              "countOfFlats": 33,
+              "debt": 100000
+            },
+            {
+              "countOfCitizens": 65,
+              "countOfFlats": 33,
+              "debt": 4500000
+            }
+          ]
+        },
+        {
+          "street": "Ломоносова",
+          "number": 66,
+          "entrances": [
+            {
+              "countOfCitizens": 56,
+              "countOfFlats": 30,
+              "debt": 10000
+            },
+            {
+              "countOfCitizens": 54,
+              "countOfFlats": 28,
+              "debt": 450
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ленинский",
+      "houses": [
+        {
+          "street": "Советская",
+          "number": 22,
+          "entrances": [
+            {
+              "countOfCitizens": 15,
+              "countOfFlats": 33,
+              "debt": 100000
+            },
+            {
+              "countOfCitizens": 65,
+              "countOfFlats": 33,
+              "debt": 4500000
+            }
+          ]
+        },
+        {
+          "street": "Ломоносова",
+          "number": 66,
+          "entrances": [
+            {
+              "countOfCitizens": 56,
+              "countOfFlats": 30,
+              "debt": 10000
+            },
+            {
+              "countOfCitizens": 54,
+              "countOfFlats": 28,
+              "debt": 450
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

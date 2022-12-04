@@ -10,11 +10,11 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class FileConverterTests {
-    private static final String XML_CORRECT_FILE_NAME = "A:\\FileConverter\\CorrectXml.xml";
-    private static final String JSON_CORRECT_FILE_NAME = "A:\\FileConverter\\CorrectJson.json";
+    private static final String XML_CORRECT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\CorrectXml.xml";
+    private static final String JSON_CORRECT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\CorrectJson.json";
 
-    private static final String XML_RESULT_FILE_NAME = "A:\\FileConverter\\ResultXmlForTest.xml";
-    private static final String JSON_RESULT_FILE_NAME = "A:\\FileConverter\\ResultJsonForTest.json";
+    private static final String XML_RESULT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\ResultXmlForTest.xml";
+    private static final String JSON_RESULT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\ResultJsonForTest.json";
 
     private FileConverter fileConverter;
 
