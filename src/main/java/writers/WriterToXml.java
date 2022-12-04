@@ -1,7 +1,7 @@
-package Writers;
+package writers;
 
-import City.District;
-import City.DistrictsStore;
+import city.District;
+import city.DistrictsStore;
 import lombok.val;
 
 import javax.xml.bind.JAXBContext;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class WriterToXmlWithJaxb implements Writer {
-    private final static Logger logger = Logger.getLogger(XmlReader.class.getName());
+public class WriterToXml implements Writer {
+    private final static Logger logger = Logger.getLogger(WriterToXml.class.getName());
 
     @Override
     public void writeToFile(final String fileName, final List<District> districts) throws JAXBException {
