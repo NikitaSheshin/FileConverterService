@@ -1,4 +1,4 @@
-package City;
+package city;
 
 import lombok.*;
 

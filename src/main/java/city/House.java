@@ -1,5 +1,6 @@
-package City;
+package city;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -15,6 +16,7 @@ import java.util.List;
 public class House {
     private String street;
     private int number;
+    @SerializedName("entrances")
     @XmlElement(name = "entrance")
     private List<Entrance> entrances;
 }
