@@ -1,7 +1,6 @@
 package City;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,12 +8,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-@XmlRootElement(name = "districts")
+@XmlRootElement(name = "house")
 
-@Getter
-@Setter
+@Data
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DistrictsStore {
-    @XmlElement(name = "district")
-    List<District> districts;
+public class House {
+    private String street;
+    private int number;
+    @XmlElement(name = "entrance")
+    private List<Entrance> entrances;
 }

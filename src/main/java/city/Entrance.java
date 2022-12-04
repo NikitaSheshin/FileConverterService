@@ -6,10 +6,7 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "entrance")
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @XmlType(propOrder = { "countOfFlats", "countOfCitizens", "debt"} )
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Entrance {

@@ -9,8 +9,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WriterToXmlWithJaxb implements Writer {
+    private final static Logger logger = Logger.getLogger(XmlReader.class.getName());
+
     @Override
     public void writeToFile(final String fileName, final List<District> districts) throws JAXBException {
         DistrictsStore store = new DistrictsStore();
@@ -20,5 +24,6 @@ public class WriterToXmlWithJaxb implements Writer {
         val contextMarshaller = context.createMarshaller();
         contextMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         contextMarshaller.marshal(store, new File(fileName));
+        logger.log(Level.INFO, "Данные записаны в файл");
     }
 }

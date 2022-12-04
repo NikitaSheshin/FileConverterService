@@ -7,10 +7,7 @@ import java.util.List;
 
 @XmlRootElement(name = "district")
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @XmlAccessorType(XmlAccessType.FIELD)
 public class District {
     private String name;
