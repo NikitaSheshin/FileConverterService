@@ -15,7 +15,7 @@ public class WriterToJson implements Writer {
     private final static Logger logger = Logger.getLogger(WriterToJson.class.getName());
 
     @Override
-    public void writeToFile(String fileName, List<District> districts) throws IOException {
+    public void writeToFile(final String fileName, final List<District> districts) throws IOException {
         DistrictsStore districtsStore = new DistrictsStore();
         districtsStore.setDistricts(districts);
 

@@ -15,7 +15,7 @@ public class JsonReader implements Reader {
     private final static Logger logger = Logger.getLogger(JsonReader.class.getName());
 
     @Override
-    public List<District> readFromFile(String fileName) throws IOException {
+    public List<District> readFromFile(final String fileName) throws IOException {
         FileReader fileReader = new FileReader(fileName);
         BufferedReader reader = new BufferedReader(fileReader);
 
