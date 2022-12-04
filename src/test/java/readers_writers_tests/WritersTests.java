@@ -1,4 +1,4 @@
-package ReadersAndWritersTests;
+package readers_writers_tests;
 
 import readers.JsonReader;
 import readers.Reader;
@@ -8,11 +8,8 @@ import writers.WriterToJson;
 import writers.WriterToXml;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -31,10 +28,7 @@ public class WritersTests {
     @Test
     public void jaxbWriterTest() throws JAXBException,
                                         IOException,
-                                        ParseException,
-                                        ParserConfigurationException,
-                                        SAXException,
-                                        TransformerException {
+                                        ParseException {
         reader = new XmlReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_XML_FILE);
 
@@ -47,11 +41,8 @@ public class WritersTests {
 
     @Test
     public void jsonWriterTest() throws JAXBException,
-            IOException,
-            ParseException,
-            ParserConfigurationException,
-            SAXException,
-            TransformerException {
+                                        IOException,
+                                        ParseException {
         reader = new JsonReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_JSON_FILE);
 
