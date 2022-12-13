@@ -8,10 +8,8 @@ import writers.Writer;
 import writers.WriterToJson;
 import writers.WriterToXml;
 
-import java.io.Serializable;
-
 @Getter
-public class InputArguments implements Serializable {
+public class InputArguments {
     private String inputFileName;
     private String outputFileName;
 

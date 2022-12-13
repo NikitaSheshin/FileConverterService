@@ -2,8 +2,6 @@ package readers;
 
 import beans.json.DistrictJson;
 import beans.json.DistrictsStoreJson;
-import city.District;
-import city.DistrictsStore;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 
