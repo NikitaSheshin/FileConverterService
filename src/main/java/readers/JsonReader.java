@@ -1,34 +1,31 @@
 package readers;
 
+import beans.json.DistrictJson;
+import beans.json.DistrictsStoreJson;
 import city.District;
 import city.DistrictsStore;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+@Slf4j
 public class JsonReader implements Reader {
-    private final static Logger logger = Logger.getLogger(JsonReader.class.getName());
-
     @Override
-    public List<District> readFromFile(final String fileName) throws IOException {
-        FileReader fileReader = new FileReader(fileName);
-        BufferedReader reader = new BufferedReader(fileReader);
+    public List<DistrictJson> readFromFile(final String fileName) {
+        return tryToReadFromFile(fileName);
+    }
 
-        StringBuilder jsonStringFromFile = new StringBuilder();
-        String currentString = reader.readLine();
-        while (currentString != null) {
-            jsonStringFromFile.append(currentString);
-            currentString = reader.readLine();
+    private List<DistrictJson> tryToReadFromFile (final String fileName) {
+        try (var bufferedReader = Files.newBufferedReader(Paths.get(fileName))){
+            return (new Gson().fromJson(bufferedReader, DistrictsStoreJson.class)).getDistricts();
+        } catch (IOException ioException) {
+            log.error("Нет файла по указанному пути", ioException);
+            System.out.println("Нет файла по указанному пути");
+            throw new IllegalCallerException();
         }
-
-        DistrictsStore districts = new Gson().fromJson(jsonStringFromFile.toString(), DistrictsStore.class);
-        logger.log(Level.INFO, "Данные считаны из файла");
-
-        return districts.getDistricts();
     }
 }

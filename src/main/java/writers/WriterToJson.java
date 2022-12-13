@@ -1,34 +1,39 @@
 package writers;
 
-import city.District;
-import city.DistrictsStore;
+import beans.json.DistrictsStoreJson;
+import beans.xml.DistrictXml;
+import beans.xml.DistrictsStoreXml;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.dozer.DozerBeanMapper;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+@Slf4j
 public class WriterToJson implements Writer {
-    private final static Logger logger = Logger.getLogger(WriterToJson.class.getName());
-
-    @Override
-    public void writeToFile(final String fileName, final List<District> districts) throws IOException {
-        DistrictsStore districtsStore = new DistrictsStore();
-        districtsStore.setDistricts(districts);
-
+    public void writeToFile(final String fileName, final List<?> districts) {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
-        String jsonStringWithDistricts = gson.toJson(districtsStore);
-        logger.log(Level.INFO, "Данные записаны в json-строку");
 
-        FileWriter writer = new FileWriter(fileName);
-        writer.write(jsonStringWithDistricts);
+        DozerBeanMapper mapper = new DozerBeanMapper();
+        val data = mapper.map(new DistrictsStoreXml((List<DistrictXml>) districts),
+                                            DistrictsStoreJson.class);
+        tryToWriteData(fileName, gson.toJson(data));
+    }
 
-        writer.flush();
-        logger.log(Level.INFO, "Данные записаны в файл");
+    private void tryToWriteData(final String fileName, final String jsonStringWithDistricts) {
+        try (final FileWriter writer = new FileWriter(fileName)) {
+            writer.write(jsonStringWithDistricts);
+            writer.flush();
+            log.info("Данные записаны в файл");
+        } catch (IOException ioException) {
+            log.error("Ошибка при попытке записать данные в файл", ioException);
+            System.out.println("Ошибка при попытке записать данные в файл");
+        }
     }
 }

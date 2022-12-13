@@ -1,20 +1,21 @@
-import file_converter.FileConverter;
+import converter.file.FileConverter;
+import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class FileConverterTests {
-    private static final String XML_CORRECT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\CorrectXml.xml";
-    private static final String JSON_CORRECT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\CorrectJson.json";
+    private static final String XML_CORRECT_FILE_NAME = "src\\test\\files_for_tests\\CorrectXml.xml";
+    private static final String JSON_CORRECT_FILE_NAME = "src\\test\\files_for_tests\\CorrectJson.json";
 
-    private static final String XML_RESULT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\ResultXmlForTest.xml";
-    private static final String JSON_RESULT_FILE_NAME = "A:\\FileConverter\\files_for_tests\\ResultJsonForTest.json";
+    private static final String XML_RESULT_FILE_NAME = "src\\test\\files_for_tests\\ResultXmlForTest.xml";
+    private static final String JSON_RESULT_FILE_NAME = "src\\test\\files_for_tests\\ResultJsonForTest.json";
 
     private FileConverter fileConverter;
 
@@ -27,26 +28,20 @@ public class FileConverterTests {
     public void testConvertXmlToJson() {
         fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME} );
 
-        File correctFile = new File(JSON_CORRECT_FILE_NAME);
-        File resultFile = new File(JSON_RESULT_FILE_NAME);
-
-        assertTrue(isEqual(correctFile, resultFile));
+        assertTrue(isEqual(JSON_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME));
     }
 
     @Test
     public void testConvertJsonToXml() {
         fileConverter.convert(new String[] {JSON_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME} );
 
-        File correctFile = new File(XML_CORRECT_FILE_NAME);
-        File resultFile = new File(XML_RESULT_FILE_NAME);
-
-        assertTrue(isEqual(correctFile, resultFile));
+        assertTrue(isEqual(XML_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME));
     }
 
-    private static boolean isEqual(File firstFile, File secondFile) {
+    private static boolean isEqual(String firstFileName, String secondFileName) {
         try {
-            byte[] firstFileContent = Files.readAllBytes(firstFile.toPath());
-            byte[] secondFileContent = Files.readAllBytes(secondFile.toPath());
+            val firstFileContent = Files.readAllBytes(Path.of(firstFileName));
+            val secondFileContent = Files.readAllBytes(Path.of(secondFileName));
 
             return Arrays.equals(firstFileContent, secondFileContent);
         } catch (IOException e) {
