@@ -9,11 +9,11 @@ import writers.WriterToXml;
 import static org.junit.Assert.assertEquals;
 
 public class WritersTests {
-    private final static String PATH_TO_CORRECT_XML_FILE = "src\\test\\files_for_tests\\CorrectXml.xml";
-    private final static String PATH_TO_RESULT_XML_FILE = "src\\test\\files_for_tests\\ResultXmlForTest.xml";
+    private final static String PATH_TO_CORRECT_XML_FILE = "src\\test\\files\\CorrectXml.xml";
+    private final static String PATH_TO_RESULT_XML_FILE = "src\\test\\files\\ResultXmlForTest.xml";
 
-    private final static String PATH_TO_CORRECT_JSON_FILE = "src\\test\\files_for_tests\\CorrectJson.json";
-    private final static String PATH_TO_RESULT_JSON_FILE = "src\\test\\files_for_tests\\ResultJsonForTest.json";
+    private final static String PATH_TO_CORRECT_JSON_FILE = "src\\test\\files\\CorrectJson.json";
+    private final static String PATH_TO_RESULT_JSON_FILE = "src\\test\\files\\ResultJsonForTest.json";
 
     private final static int COUNT_OF_DISTRICTS_IN_CORRECT_FILE = 5;
 

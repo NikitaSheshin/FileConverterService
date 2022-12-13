@@ -1,21 +1,19 @@
 import converter.file.FileConverter;
-import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
 
 import static org.junit.Assert.assertTrue;
 
 public class FileConverterTests {
-    private static final String XML_CORRECT_FILE_NAME = "src\\test\\files_for_tests\\CorrectXml.xml";
-    private static final String JSON_CORRECT_FILE_NAME = "src\\test\\files_for_tests\\CorrectJson.json";
+    private static final String XML_CORRECT_FILE_NAME = "src\\test\\files\\CorrectXml.xml";
+    private static final String JSON_CORRECT_FILE_NAME = "src\\test\\files\\CorrectJson.json";
 
-    private static final String XML_RESULT_FILE_NAME = "src\\test\\files_for_tests\\ResultXmlForTest.xml";
-    private static final String JSON_RESULT_FILE_NAME = "src\\test\\files_for_tests\\ResultJsonForTest.json";
+    private static final String XML_RESULT_FILE_NAME = "src\\test\\files\\ResultXmlForTest.xml";
+    private static final String JSON_RESULT_FILE_NAME = "src\\test\\files\\ResultJsonForTest.json";
 
     private FileConverter fileConverter;
 
@@ -25,7 +23,7 @@ public class FileConverterTests {
     }
 
     @Test
-    public void testConvertXmlToJson() {
+    public void testConvertXmlToJson() throws IOException {
         fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME} );
 
         assertTrue(isEqual(JSON_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME));
@@ -39,11 +37,12 @@ public class FileConverterTests {
     }
 
     private static boolean isEqual(String firstFileName, String secondFileName) {
-        try {
-            val firstFileContent = Files.readAllBytes(Path.of(firstFileName));
-            val secondFileContent = Files.readAllBytes(Path.of(secondFileName));
-
-            return Arrays.equals(firstFileContent, secondFileContent);
+        try (Reader firstFile = new BufferedReader(new FileReader(firstFileName))) {
+            try (Reader secondFile = new BufferedReader(new FileReader(secondFileName))) {
+                return IOUtils.contentEqualsIgnoreEOL(firstFile, secondFile);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

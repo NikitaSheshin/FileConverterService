@@ -9,11 +9,11 @@ import static org.junit.Assert.assertEquals;
 public class ReadersTests {
     private Reader reader;
 
-    private final static String PATH_TO_CORRECT_XML_FILE = "src\\test\\files_for_tests\\CorrectXml.xml";
-    private final static String PATH_TO_INCORRECT_XML_FILE = "src\\test\\files_for_tests\\WrongXml.xml";
+    private final static String PATH_TO_CORRECT_XML_FILE = "src\\test\\files\\CorrectXml.xml";
+    private final static String PATH_TO_INCORRECT_XML_FILE = "src\\test\\files\\WrongXml.xml";
 
-    private final static String PATH_TO_CORRECT_JSON_FILE = "src\\test\\files_for_tests\\CorrectJson.json";
-    private final static String PATH_TO_INCORRECT_JSON_FILE = "src\\test\\files_for_tests\\WrongJson.json";
+    private final static String PATH_TO_CORRECT_JSON_FILE = "src\\test\\files\\CorrectJson.json";
+    private final static String PATH_TO_INCORRECT_JSON_FILE = "src\\test\\files\\WrongJson.json";
 
     private final static String WRONG_PATH = "wrong path";
     private final static int COUNT_OF_DISTRICTS_IN_CORRECT_FILE = 5;
