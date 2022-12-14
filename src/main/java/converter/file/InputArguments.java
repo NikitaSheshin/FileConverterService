@@ -1,6 +1,7 @@
 package converter.file;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import readers.JsonReader;
 import readers.Reader;
 import readers.XmlReader;
@@ -9,6 +10,7 @@ import writers.WriterToJson;
 import writers.WriterToXml;
 
 @Getter
+@Slf4j
 public class InputArguments {
     private String inputFileName;
     private String outputFileName;
@@ -27,12 +29,14 @@ public class InputArguments {
 
     private void checkCorrectCount(String[] args) {
         if (args.length != 2) {
+            log.warn("Неверное количество аргументов");
             throw new IllegalArgumentException("Неверное количество аргументов");
         }
     }
 
     private void checkFilesFormats() {
         if (!isXmlToJson() && !isJsonToXml()) {
+            log.warn("Переданы файлы неподходящих форматов");
             throw new IllegalArgumentException("Переданы файлы неподходящих форматов");
         }
     }

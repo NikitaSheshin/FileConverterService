@@ -18,7 +18,7 @@ public class XmlReader implements Reader {
         try {
             return tryToReadFromFile(fileName);
         } catch (JAXBException jaxbException) {
-            log.error("Ошибка при попытке считать данные из файла", jaxbException);
+            log.warn("Ошибка при попытке считать данные из файла", jaxbException);
             System.out.println("Ошибка при попытке считать данные из файла");
             throw new ClassCastException("Ошибка считывания данных из файла");
         }
@@ -31,7 +31,7 @@ public class XmlReader implements Reader {
                 return ((DistrictsStoreXml) um.unmarshal(inputStream)).getDistricts();
             }
         } catch (IOException fileNotFoundException) {
-            log.error("Не найден файл по указанному пути", fileNotFoundException);
+            log.warn("Не найден файл по указанному пути", fileNotFoundException);
             System.out.println("Не найден файл по указанному пути");
             throw new IllegalCallerException(fileNotFoundException);
         }

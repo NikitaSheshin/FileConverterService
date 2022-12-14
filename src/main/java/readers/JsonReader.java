@@ -21,7 +21,7 @@ public class JsonReader implements Reader {
         try (var bufferedReader = Files.newBufferedReader(Paths.get(fileName))){
             return (new Gson().fromJson(bufferedReader, DistrictsStoreJson.class)).getDistricts();
         } catch (IOException ioException) {
-            log.error("Нет файла по указанному пути", ioException);
+            log.warn("Нет файла по указанному пути", ioException);
             System.out.println("Нет файла по указанному пути");
             throw new IllegalCallerException();
         }

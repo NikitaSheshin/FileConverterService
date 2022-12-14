@@ -30,9 +30,9 @@ public class WriterToJson implements Writer {
         try (final FileWriter writer = new FileWriter(fileName)) {
             writer.write(jsonStringWithDistricts);
             writer.flush();
-            log.info("Данные записаны в файл");
+            log.trace("Данные записаны в файл");
         } catch (IOException ioException) {
-            log.error("Ошибка при попытке записать данные в файл", ioException);
+            log.warn("Ошибка при попытке записать данные в файл", ioException);
             System.out.println("Ошибка при попытке записать данные в файл");
         }
     }

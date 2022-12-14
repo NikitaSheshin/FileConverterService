@@ -26,11 +26,11 @@ public class WriterToXml implements Writer {
 
             contextMarshaller.marshal(data, new File(fileName));
         } catch (JAXBException jaxbException) {
-            log.error("Ошибка при попытке записать данные в файл", jaxbException);
+            log.warn("Ошибка при попытке записать данные в файл", jaxbException);
             System.out.println("Ошибка при попытке записать данные в файл");
             throw new ClassCastException();
         }
 
-        log.info("Данные записаны в файл");
+        log.trace("Данные записаны в файл");
     }
 }
