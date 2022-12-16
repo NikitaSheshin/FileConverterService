@@ -9,6 +9,5 @@ import java.util.List;
 public class HouseJson {
     private String street;
     private int number;
-    @SerializedName("entrances")
     private List<EntranceJson> entrances;
 }
