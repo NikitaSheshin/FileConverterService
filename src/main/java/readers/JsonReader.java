@@ -4,6 +4,7 @@ import beans.json.DistrictJson;
 import beans.json.DistrictsStoreJson;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,13 +18,15 @@ public class JsonReader implements Reader {
         return tryToReadFromFile(fileName);
     }
 
-    private List<DistrictJson> tryToReadFromFile (final String fileName) {
-        try (var bufferedReader = Files.newBufferedReader(Paths.get(fileName))){
+    private static final String ERROR_MESSAGE = "Нет файла по указанному пути";
+
+    private List<DistrictJson> tryToReadFromFile(final String fileName) {
+        try (val bufferedReader = Files.newBufferedReader(Paths.get(fileName))) {
             return (new Gson().fromJson(bufferedReader, DistrictsStoreJson.class)).getDistricts();
         } catch (IOException ioException) {
-            log.warn("Нет файла по указанному пути", ioException);
-            System.out.println("Нет файла по указанному пути");
-            throw new IllegalCallerException();
+            log.warn(ERROR_MESSAGE, ioException);
+            System.out.println(ERROR_MESSAGE);
+            throw new IllegalCallerException(ERROR_MESSAGE);
         }
     }
 }

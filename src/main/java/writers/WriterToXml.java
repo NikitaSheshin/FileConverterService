@@ -1,11 +1,10 @@
 package writers;
 
+import beans.mappers.DistrictsListMapper;
 import beans.json.DistrictJson;
-import beans.json.DistrictsStoreJson;
 import beans.xml.DistrictsStoreXml;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.dozer.DozerBeanMapper;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -20,11 +19,9 @@ public class WriterToXml implements Writer {
             val contextMarshaller = JAXBContext.newInstance(DistrictsStoreXml.class).createMarshaller();
             contextMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            DozerBeanMapper mapper = new DozerBeanMapper();
-            val data = mapper.map(new DistrictsStoreJson((List<DistrictJson>) districts),
-                    DistrictsStoreXml.class);
-
-            contextMarshaller.marshal(data, new File(fileName));
+            contextMarshaller.marshal(new DistrictsStoreXml(
+                            DistrictsListMapper.instance.toDistrictXmlList((List<DistrictJson>) districts)),
+                    new File(fileName));
         } catch (JAXBException jaxbException) {
             log.warn("Ошибка при попытке записать данные в файл", jaxbException);
             System.out.println("Ошибка при попытке записать данные в файл");
