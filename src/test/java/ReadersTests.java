@@ -9,11 +9,11 @@ import static org.junit.Assert.assertEquals;
 public class ReadersTests {
     private Reader reader;
 
-    private final static String PATH_TO_CORRECT_XML_FILE = "src\\test\\files\\CorrectXml.xml";
-    private final static String PATH_TO_INCORRECT_XML_FILE = "src\\test\\files\\WrongXml.xml";
+    private final static String PATH_TO_CORRECT_XML_FILE = "src\\test\\resources\\files\\CorrectXml.xml";
+    private final static String PATH_TO_INCORRECT_XML_FILE = "src\\test\\resources\\\\WrongXml.xml";
 
-    private final static String PATH_TO_CORRECT_JSON_FILE = "src\\test\\files\\CorrectJson.json";
-    private final static String PATH_TO_INCORRECT_JSON_FILE = "src\\test\\files\\WrongJson.json";
+    private final static String PATH_TO_CORRECT_JSON_FILE = "src\\test\\resources\\files\\CorrectJson.json";
+    private final static String PATH_TO_INCORRECT_JSON_FILE = "src\\test\\resources\\files\\WrongJson.json";
 
     private final static String WRONG_PATH = "wrong path";
     private final static int COUNT_OF_DISTRICTS_IN_CORRECT_FILE = 5;
@@ -32,7 +32,7 @@ public class ReadersTests {
         reader.readFromFile(WRONG_PATH);
     }
 
-    @Test(expected = ClassCastException.class)
+    @Test(expected = IllegalCallerException.class)
     public void jaxbReaderWithBadStructure() {
         reader = new XmlReader();
         reader.readFromFile(PATH_TO_INCORRECT_XML_FILE);
