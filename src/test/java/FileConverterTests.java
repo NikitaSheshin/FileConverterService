@@ -22,15 +22,15 @@ public class FileConverterTests {
     }
 
     @Test
-    public void testConvertXmlToJson() throws IOException {
-        fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME} );
+    public void testConvertXmlToJson() {
+        fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME});
 
         assertTrue(isEqual("/files/CorrectJson.json", "/files/ResultJsonForTest.json"));
     }
 
     @Test
     public void testConvertJsonToXml() {
-        fileConverter.convert(new String[] {JSON_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME} );
+        fileConverter.convert(new String[]{JSON_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME});
 
         assertTrue(isEqual("/files/CorrectXml.xml", "/files/ResultXmlForTest.xml"));
     }
@@ -43,6 +43,22 @@ public class FileConverterTests {
             return Arrays.equals(firstFile.readAllBytes(), secondFile.readAllBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void xmlToJsonSpeedCheck() {
+        for (int numberOfTry = 0; numberOfTry < 10000; ++numberOfTry) {
+            fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME});
+            assertTrue(isEqual("/files/CorrectJson.json", "/files/ResultJsonForTest.json"));
+        }
+    }
+
+    @Test
+    public void jsonToXmlSpeedCheck() {
+        for (int numberOfTry = 0; numberOfTry < 10000; ++numberOfTry) {
+            fileConverter.convert(new String[]{JSON_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME});
+            assertTrue(isEqual("/files/CorrectXml.xml", "/files/ResultXmlForTest.xml"));
         }
     }
 }
