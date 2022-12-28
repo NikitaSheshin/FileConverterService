@@ -6,8 +6,8 @@ public class FileConverter {
     public void convert(final String[] fileNames) {
         val arguments = new InputArguments(fileNames);
 
-        arguments.getWriter()
+        arguments.createWriter()
                 .writeToFile(arguments.getOutputFileName(),
-                        arguments.getReader().readFromFile(arguments.getInputFileName()));
+                        arguments.createReader().readFromFile(arguments.getInputFileName()));
     }
 }

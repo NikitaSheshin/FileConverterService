@@ -1,6 +1,7 @@
 package converter.file;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import readers.JsonReader;
 import readers.Reader;
@@ -12,32 +13,39 @@ import writers.WriterToXml;
 @Getter
 @Slf4j
 public class InputArguments {
-    private String inputFileName;
-    private String outputFileName;
+    private final String inputFileName;
+    private final String outputFileName;
 
-    public InputArguments(String[] args) {
-        validate(args);
-    }
-
-    private void validate(String[] args) {
+    public InputArguments(@NonNull String[] args) {
         checkCorrectCount(args);
         inputFileName = args[0];
         outputFileName = args[1];
+        checkNotNullArguments();
 
         checkFilesFormats();
     }
 
     private void checkCorrectCount(String[] args) {
-        if (args.length != 2) {
+        if (args.length < 2) {
             log.warn("Неверное количество аргументов");
-            throw new IllegalArgumentException("Неверное количество аргументов");
+            System.out.println("Неверное количество аргументов");
+            System.exit(-1);
+        }
+    }
+
+    private void checkNotNullArguments() {
+        if (inputFileName == null || outputFileName == null) {
+            log.warn("Один или оба аргумента равны null");
+            System.out.println("Один или оба аргумента равны null");
+            System.exit(1);
         }
     }
 
     private void checkFilesFormats() {
         if (!isXmlToJson() && !isJsonToXml()) {
-            log.warn("Переданы файлы неподходящих форматов");
-            throw new IllegalArgumentException("Переданы файлы неподходящих форматов");
+            log.warn("Переденные файлы должны иметь разрешения .xml и .json");
+            System.out.println("Переденные файлы должны иметь разрешения .xml и .json");
+            System.exit(1);
         }
     }
 
@@ -49,22 +57,16 @@ public class InputArguments {
         return inputFileName.endsWith(".json") && outputFileName.endsWith(".xml");
     }
 
-    public Reader getReader() {
-        if (inputFileIsXml()) {
-            return new XmlReader();
-        }
-        return new JsonReader();
+    public Reader createReader() {
+        return inputFileIsXml() ? new XmlReader() : new JsonReader();
     }
 
     private Boolean inputFileIsXml() {
         return inputFileName.endsWith(".xml");
     }
 
-    public Writer getWriter() {
-        if (outputFileIsXml()) {
-            return new WriterToXml();
-        }
-        return new WriterToJson();
+    public Writer createWriter() {
+        return outputFileIsXml() ? new WriterToXml() : new WriterToJson();
     }
 
     private Boolean outputFileIsXml() {
