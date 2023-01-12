@@ -13,20 +13,15 @@ import java.util.List;
 
 @Slf4j
 public class JsonReader implements Reader {
-    @Override
-    public List<DistrictJson> readFromFile(final String fileName) {
-        return tryToReadFromFile(fileName);
+    private static final Gson GSON_READER = new Gson();
+
+    public JsonReader() {
+        log.debug("Создан объект JsonReader");
     }
 
-    private static final String ERROR_MESSAGE = "Нет файла по указанному пути";
-
-    private List<DistrictJson> tryToReadFromFile(final String fileName) {
+    public List<DistrictJson> readFromFile(final String fileName) throws IOException {
         try (val bufferedReader = Files.newBufferedReader(Paths.get(fileName))) {
-            return (new Gson().fromJson(bufferedReader, DistrictsStoreJson.class)).getDistricts();
-        } catch (IOException ioException) {
-            log.warn(ERROR_MESSAGE, ioException);
-            System.out.println(ERROR_MESSAGE);
-            throw new IllegalCallerException(ERROR_MESSAGE);
+            return (GSON_READER.fromJson(bufferedReader, DistrictsStoreJson.class)).getDistricts();
         }
     }
 }

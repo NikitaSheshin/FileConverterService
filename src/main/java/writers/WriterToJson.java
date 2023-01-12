@@ -2,7 +2,6 @@ package writers;
 
 import beans.mappers.DistrictsListMapper;
 import beans.json.DistrictsStoreJson;
-import beans.xml.DistrictXml;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -13,23 +12,22 @@ import java.util.List;
 
 @Slf4j
 public class WriterToJson implements Writer {
-    public void writeToFile(final String fileName, final List<?> districts) {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .create();
+    private final static Gson GSON_WRITER = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
-        tryToWriteData(fileName, gson.toJson(new DistrictsStoreJson(
-                DistrictsListMapper.instance.toDistrictJsonList((List<DistrictXml>) districts)
-        )));
+    public WriterToJson() {
+        log.debug("Создан объект WriterToJson");
     }
 
-    private void tryToWriteData(final String fileName, final String jsonStringWithDistricts) {
+    public void writeToFile(final String fileName, final List<?> districts) throws IOException {
         try (final FileWriter writer = new FileWriter(fileName)) {
-            writer.write(jsonStringWithDistricts);
-            log.trace("Данные записаны в файл");
-        } catch (IOException ioException) {
-            log.warn("Ошибка при попытке записать данные в файл", ioException);
-            System.out.println("Ошибка при попытке записать данные в файл");
+            writer.write(GSON_WRITER.toJson(
+                    new DistrictsStoreJson(
+                            DistrictsListMapper.instance.toDistrictJsonList((List<beans.xml.DistrictXml>) districts)
+                    )));
+
+            log.debug("Данные записаны в json файл");
         }
     }
 }
