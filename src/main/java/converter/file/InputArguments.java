@@ -10,11 +10,17 @@ import writers.Writer;
 import writers.WriterToJson;
 import writers.WriterToXml;
 
+import javax.xml.bind.JAXBException;
+
 @Getter
 @Slf4j
 public class InputArguments {
     private final String inputFileName;
     private final String outputFileName;
+
+    private final static String WRONG_COUNT_OF_ARGUMENTS_MESSAGE = "Неверное количество аргументов";
+    private final static String NULL_ARGUMENTS_MESSAGE = "Один или оба аргумента равны null";
+    private final static String WRONG_FORMAT_MESSAGE = "Переденные файлы должны иметь разрешения .xml и .json";
 
     public InputArguments(@NonNull String[] args) {
         checkCorrectCount(args);
@@ -27,25 +33,25 @@ public class InputArguments {
 
     private void checkCorrectCount(String[] args) {
         if (args.length < 2) {
-            log.warn("Неверное количество аргументов");
-            System.out.println("Неверное количество аргументов");
-            System.exit(-1);
+            log.warn(WRONG_COUNT_OF_ARGUMENTS_MESSAGE);
+            System.out.println(WRONG_COUNT_OF_ARGUMENTS_MESSAGE);
+            throw new IllegalArgumentException(WRONG_COUNT_OF_ARGUMENTS_MESSAGE);
         }
     }
 
     private void checkNotNullArguments() {
         if (inputFileName == null || outputFileName == null) {
-            log.warn("Один или оба аргумента равны null");
-            System.out.println("Один или оба аргумента равны null");
-            System.exit(1);
+            log.warn(NULL_ARGUMENTS_MESSAGE);
+            System.out.println(NULL_ARGUMENTS_MESSAGE);
+            throw new IllegalArgumentException(NULL_ARGUMENTS_MESSAGE);
         }
     }
 
     private void checkFilesFormats() {
         if (!isXmlToJson() && !isJsonToXml()) {
-            log.warn("Переденные файлы должны иметь разрешения .xml и .json");
-            System.out.println("Переденные файлы должны иметь разрешения .xml и .json");
-            System.exit(1);
+            log.warn(WRONG_FORMAT_MESSAGE);
+            System.out.println(WRONG_FORMAT_MESSAGE);
+            throw new IllegalArgumentException(WRONG_FORMAT_MESSAGE);
         }
     }
 
@@ -57,7 +63,7 @@ public class InputArguments {
         return inputFileName.endsWith(".json") && outputFileName.endsWith(".xml");
     }
 
-    public Reader createReader() {
+    public Reader createReader() throws JAXBException {
         return inputFileIsXml() ? new XmlReader() : new JsonReader();
     }
 
@@ -65,7 +71,7 @@ public class InputArguments {
         return inputFileName.endsWith(".xml");
     }
 
-    public Writer createWriter() {
+    public Writer createWriter() throws JAXBException {
         return outputFileIsXml() ? new WriterToXml() : new WriterToJson();
     }
 
