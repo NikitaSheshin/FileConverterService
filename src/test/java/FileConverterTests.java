@@ -2,6 +2,7 @@ import converter.file.FileConverter;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.util.Arrays;
 
@@ -22,14 +23,18 @@ public class FileConverterTests {
     }
 
     @Test
-    public void testConvertXmlToJson() {
-        fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME});
+    public void testConvertXmlToJson() throws IOException {
+        try {
+            fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME});
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
 
         assertTrue(isEqual("/files/CorrectJson.json", "/files/ResultJsonForTest.json"));
     }
 
     @Test
-    public void testConvertJsonToXml() {
+    public void testConvertJsonToXml() throws JAXBException, IOException {
         fileConverter.convert(new String[]{JSON_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME});
 
         assertTrue(isEqual("/files/CorrectXml.xml", "/files/ResultXmlForTest.xml"));
@@ -47,16 +52,16 @@ public class FileConverterTests {
     }
 
     @Test
-    public void xmlToJsonSpeedCheck() {
-        for (int numberOfTry = 0; numberOfTry < 10000; ++numberOfTry) {
+    public void xmlToJsonSpeedCheck() throws JAXBException, IOException {
+        for (int numberOfTry = 0; numberOfTry < 100000; ++numberOfTry) {
             fileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME});
             assertTrue(isEqual("/files/CorrectJson.json", "/files/ResultJsonForTest.json"));
         }
     }
 
     @Test
-    public void jsonToXmlSpeedCheck() {
-        for (int numberOfTry = 0; numberOfTry < 10000; ++numberOfTry) {
+    public void jsonToXmlSpeedCheck() throws JAXBException, IOException {
+        for (int numberOfTry = 0; numberOfTry < 100000; ++numberOfTry) {
             fileConverter.convert(new String[]{JSON_CORRECT_FILE_NAME, XML_RESULT_FILE_NAME});
             assertTrue(isEqual("/files/CorrectXml.xml", "/files/ResultXmlForTest.xml"));
         }

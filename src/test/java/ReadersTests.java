@@ -4,6 +4,10 @@ import readers.JsonReader;
 import readers.Reader;
 import readers.XmlReader;
 
+import javax.xml.bind.JAXBException;
+
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class ReadersTests {
@@ -19,7 +23,7 @@ public class ReadersTests {
     private final static int COUNT_OF_DISTRICTS_IN_CORRECT_FILE = 5;
 
     @Test
-    public void jaxbReaderTest() {
+    public void jaxbReaderTest() throws JAXBException, IOException {
         reader = new XmlReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_XML_FILE);
 
@@ -27,19 +31,19 @@ public class ReadersTests {
     }
 
     @Test(expected = IllegalCallerException.class)
-    public void jaxbReaderWithWrongPath() {
+    public void jaxbReaderWithWrongPath() throws JAXBException, IOException {
         reader = new XmlReader();
         reader.readFromFile(WRONG_PATH);
     }
 
     @Test(expected = IllegalCallerException.class)
-    public void jaxbReaderWithBadStructure() {
+    public void jaxbReaderWithBadStructure() throws JAXBException, IOException {
         reader = new XmlReader();
         reader.readFromFile(PATH_TO_INCORRECT_XML_FILE);
     }
 
     @Test
-    public void jsonReaderTest() {
+    public void jsonReaderTest() throws JAXBException, IOException {
         reader = new JsonReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_JSON_FILE);
 
@@ -47,13 +51,13 @@ public class ReadersTests {
     }
 
     @Test(expected = IllegalCallerException.class)
-    public void jsonReaderTestWithWrongPath() {
+    public void jsonReaderTestWithWrongPath() throws JAXBException, IOException {
         reader = new JsonReader();
         reader.readFromFile(WRONG_PATH);
     }
 
     @Test(expected = JsonSyntaxException.class)
-    public void jsonReaderTestWithWrongStructure() {
+    public void jsonReaderTestWithWrongStructure() throws JAXBException, IOException {
         reader = new JsonReader();
         reader.readFromFile(PATH_TO_INCORRECT_JSON_FILE);
     }

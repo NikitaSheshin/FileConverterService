@@ -7,6 +7,10 @@ import writers.Writer;
 import writers.WriterToJson;
 import writers.WriterToXml;
 
+import javax.xml.bind.JAXBException;
+
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class WritersTests {
@@ -21,7 +25,7 @@ public class WritersTests {
     private Reader reader;
 
     @Test
-    public void jaxbWriterTest() {
+    public void jaxbWriterTest() throws JAXBException, IOException {
         reader = new JsonReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_JSON_FILE);
 
@@ -34,7 +38,7 @@ public class WritersTests {
     }
 
     @Test
-    public void jsonWriterTest() {
+    public void jsonWriterTest() throws JAXBException, IOException {
         reader = new XmlReader();
 
         Writer writer = new WriterToJson();
