@@ -1,0 +1,13 @@
+package converter.fileconverter;
+
+import converter.writers.Writer;
+import converter.writers.WriterToJson;
+import converter.writers.WriterToXml;
+
+import javax.xml.bind.JAXBException;
+
+public class WriterCreater {
+    static public Writer create(String fileName) throws JAXBException {
+        return fileName.endsWith("xml") ? new WriterToXml() : new WriterToJson();
+    }
+}
