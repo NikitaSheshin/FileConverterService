@@ -3,14 +3,6 @@ package converter.file;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import readers.JsonReader;
-import readers.Reader;
-import readers.XmlReader;
-import writers.Writer;
-import writers.WriterToJson;
-import writers.WriterToXml;
-
-import javax.xml.bind.JAXBException;
 
 @Getter
 @Slf4j
@@ -61,21 +53,5 @@ public class InputArguments {
 
     private Boolean isJsonToXml() {
         return inputFileName.endsWith(".json") && outputFileName.endsWith(".xml");
-    }
-
-    public Reader createReader() throws JAXBException {
-        return inputFileIsXml() ? new XmlReader() : new JsonReader();
-    }
-
-    private Boolean inputFileIsXml() {
-        return inputFileName.endsWith(".xml");
-    }
-
-    public Writer createWriter() throws JAXBException {
-        return outputFileIsXml() ? new WriterToXml() : new WriterToJson();
-    }
-
-    private Boolean outputFileIsXml() {
-        return outputFileName.endsWith(".xml");
     }
 }
