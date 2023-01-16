@@ -1,6 +1,5 @@
 package beans.json;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.util.List;
