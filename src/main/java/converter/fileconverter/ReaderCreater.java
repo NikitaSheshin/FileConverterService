@@ -8,6 +8,6 @@ import javax.xml.bind.JAXBException;
 
 public class ReaderCreater {
     static public Reader create(String fileName) throws JAXBException {
-        return fileName.endsWith("xml") ? new XmlReader() : new JsonReader();
+        return fileName.endsWith("xml") ? XmlReader.getInstance() : JsonReader.getInstance();
     }
 }

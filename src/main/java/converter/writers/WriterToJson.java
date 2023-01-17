@@ -13,11 +13,20 @@ import java.util.List;
 
 @Slf4j
 public class WriterToJson implements Writer {
+    private static WriterToJson writer = null;
     private final static Gson GSON_WRITER = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
-    public WriterToJson() {
+    public static Writer getInstance() {
+        if (writer == null) {
+            writer = new WriterToJson();
+        }
+
+        return writer;
+    }
+
+    private WriterToJson() {
         log.debug("Создан объект WriterToJson");
     }
 

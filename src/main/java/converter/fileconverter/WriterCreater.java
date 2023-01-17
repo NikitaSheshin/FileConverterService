@@ -8,6 +8,6 @@ import javax.xml.bind.JAXBException;
 
 public class WriterCreater {
     static public Writer create(String fileName) throws JAXBException {
-        return fileName.endsWith("xml") ? new WriterToXml() : new WriterToJson();
+        return fileName.endsWith("xml") ? WriterToXml.getInstance() : WriterToJson.getInstance();
     }
 }

@@ -13,9 +13,18 @@ import java.util.List;
 
 @Slf4j
 public class JsonReader implements Reader {
+    private static JsonReader reader = null;
     private static final Gson GSON_READER = new Gson();
 
-    public JsonReader() {
+    public static Reader getInstance() {
+        if (reader == null) {
+            reader = new JsonReader();
+        }
+
+        return reader;
+    }
+
+    private JsonReader() {
         log.debug("Создан объект JsonReader");
     }
 

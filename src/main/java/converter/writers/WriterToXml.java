@@ -13,9 +13,18 @@ import java.util.List;
 
 @Slf4j
 public class WriterToXml implements Writer {
+    private static WriterToXml writer = null;
     private final Marshaller MARSHALLER = JAXBContext.newInstance(DistrictsStoreXml.class).createMarshaller();
 
-    public WriterToXml() throws JAXBException {
+    public static Writer getInstance() throws JAXBException {
+        if (writer == null) {
+            writer = new WriterToXml();
+        }
+
+        return writer;
+    }
+
+    private WriterToXml() throws JAXBException {
         MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         log.debug("Создан объект WriterToXml");
     }
