@@ -15,15 +15,21 @@ import java.util.List;
 
 @Slf4j
 public class XmlReader implements Reader {
-    private static XmlReader reader = null;
+    private static volatile XmlReader reader = null;
     private final Unmarshaller UNMARSHALLER = JAXBContext.newInstance(DistrictsStoreXml.class).createUnmarshaller();
 
     public static Reader getInstance() throws JAXBException {
-        if (reader == null) {
-            reader = new XmlReader();
+        XmlReader localInstance = reader;
+        if (localInstance == null) {
+            synchronized (XmlReader.class) {
+                localInstance = reader;
+                if (localInstance == null) {
+                    reader = localInstance = new XmlReader();
+                }
+            }
         }
 
-        return reader;
+        return localInstance;
     }
 
     private XmlReader() throws JAXBException {

@@ -5,6 +5,7 @@ import converter.beans.json.DistrictsStoreJson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import converter.beans.xml.DistrictXml;
+import converter.readers.JsonReader;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileWriter;
@@ -13,17 +14,23 @@ import java.util.List;
 
 @Slf4j
 public class WriterToJson implements Writer {
-    private static WriterToJson writer = null;
+    private static volatile WriterToJson writer = null;
     private final static Gson GSON_WRITER = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
     public static Writer getInstance() {
-        if (writer == null) {
-            writer = new WriterToJson();
+        WriterToJson localInstance = writer;
+        if (localInstance == null) {
+            synchronized (WriterToJson.class) {
+                localInstance = writer;
+                if (localInstance == null) {
+                    writer = localInstance = new WriterToJson();
+                }
+            }
         }
 
-        return writer;
+        return localInstance;
     }
 
     private WriterToJson() {

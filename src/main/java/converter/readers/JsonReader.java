@@ -1,8 +1,8 @@
 package converter.readers;
 
+import com.google.gson.Gson;
 import converter.beans.json.DistrictJson;
 import converter.beans.json.DistrictsStoreJson;
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
@@ -13,15 +13,21 @@ import java.util.List;
 
 @Slf4j
 public class JsonReader implements Reader {
-    private static JsonReader reader = null;
+    private static volatile JsonReader reader = null;
     private static final Gson GSON_READER = new Gson();
 
     public static Reader getInstance() {
-        if (reader == null) {
-            reader = new JsonReader();
+        JsonReader localInstance = reader;
+        if (localInstance == null) {
+            synchronized (JsonReader.class) {
+                localInstance = reader;
+                if (localInstance == null) {
+                    reader = localInstance = new JsonReader();
+                }
+            }
         }
 
-        return reader;
+        return localInstance;
     }
 
     private JsonReader() {

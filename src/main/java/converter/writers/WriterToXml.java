@@ -13,15 +13,21 @@ import java.util.List;
 
 @Slf4j
 public class WriterToXml implements Writer {
-    private static WriterToXml writer = null;
+    private static volatile WriterToXml writer = null;
     private final Marshaller MARSHALLER = JAXBContext.newInstance(DistrictsStoreXml.class).createMarshaller();
 
     public static Writer getInstance() throws JAXBException {
-        if (writer == null) {
-            writer = new WriterToXml();
+        WriterToXml localInstance = writer;
+        if (localInstance == null) {
+            synchronized (WriterToXml.class) {
+                localInstance = writer;
+                if (localInstance == null) {
+                    writer = localInstance = new WriterToXml();
+                }
+            }
         }
 
-        return writer;
+        return localInstance;
     }
 
     private WriterToXml() throws JAXBException {
