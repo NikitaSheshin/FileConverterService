@@ -18,8 +18,8 @@ public class FileConverterTests {
     public void testConvertXmlToJson() throws IOException {
         try {
             FileConverter.convert(new String[]{XML_CORRECT_FILE_NAME, JSON_RESULT_FILE_NAME});
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
+        } catch (JAXBException jaxbException) {
+            throw new RuntimeException(jaxbException);
         }
 
         assertTrue(isEqual("/files/CorrectJson.json", "/files/ResultJsonForTest.json"));
@@ -32,14 +32,14 @@ public class FileConverterTests {
         assertTrue(isEqual("/files/CorrectXml.xml", "/files/ResultXmlForTest.xml"));
     }
 
-    private boolean isEqual(String firstFileName, String secondFileName) {
+    private boolean isEqual(final String firstFileName, final String secondFileName) {
         var firstFile = getClass().getResourceAsStream(firstFileName);
         var secondFile = getClass().getResourceAsStream(secondFileName);
 
         try {
             return Arrays.equals(firstFile.readAllBytes(), secondFile.readAllBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ioException) {
+            throw new RuntimeException();
         }
     }
 }
