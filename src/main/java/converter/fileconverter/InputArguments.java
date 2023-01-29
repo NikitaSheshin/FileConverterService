@@ -23,7 +23,7 @@ public class InputArguments {
         checkFilesFormats();
     }
 
-    private void checkCorrectCount(String[] args) {
+    private void checkCorrectCount(final String[] args) {
         if (args.length < 2) {
             log.warn(WRONG_COUNT_OF_ARGUMENTS_MESSAGE);
             System.out.println(WRONG_COUNT_OF_ARGUMENTS_MESSAGE);
