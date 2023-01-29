@@ -9,9 +9,9 @@ public class FileConverter {
     static public void convert(final String[] fileNames) throws JAXBException, IOException {
         val arguments = new InputArguments(fileNames);
 
-        WriterCreater.create(arguments.getOutputFileName())
+        WriterCreator.create(arguments.getOutputFileName())
                 .writeToFile(arguments.getOutputFileName(),
-                        ReaderCreater.create(arguments.getInputFileName())
+                        ReaderCreator.create(arguments.getInputFileName())
                                 .readFromFile(arguments.getInputFileName()));
     }
 }
