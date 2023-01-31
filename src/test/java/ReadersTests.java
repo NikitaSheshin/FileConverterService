@@ -18,7 +18,7 @@ public class ReadersTests {
 
     @Test
     public void jaxbReaderTest() throws JAXBException, IOException {
-        reader = XmlReader.getInstance();
+        reader = new XmlReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_XML_FILE);
 
         assertEquals(dataFromFile.size(), COUNT_OF_DISTRICTS_IN_CORRECT_FILE);
@@ -26,7 +26,7 @@ public class ReadersTests {
 
     @Test
     public void jsonReaderTest() throws JAXBException, IOException {
-        reader = JsonReader.getInstance();
+        reader = new JsonReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_JSON_FILE);
 
         assertEquals(dataFromFile.size(), COUNT_OF_DISTRICTS_IN_CORRECT_FILE);

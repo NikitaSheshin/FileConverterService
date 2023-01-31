@@ -26,25 +26,25 @@ public class WritersTests {
 
     @Test
     public void jaxbWriterTest() throws JAXBException, IOException {
-        reader = JsonReader.getInstance();
+        reader = new JsonReader();
         var dataFromFile = reader.readFromFile(PATH_TO_CORRECT_JSON_FILE);
 
-        Writer writer = WriterToXml.getInstance();
+        Writer writer = new WriterToXml();
         writer.writeToFile(PATH_TO_RESULT_XML_FILE, dataFromFile);
 
-        reader = XmlReader.getInstance();
+        reader = new XmlReader();
         dataFromFile = reader.readFromFile(PATH_TO_RESULT_XML_FILE);
         assertEquals(dataFromFile.size(), COUNT_OF_DISTRICTS_IN_CORRECT_FILE);
     }
 
     @Test
     public void jsonWriterTest() throws JAXBException, IOException {
-        reader = XmlReader.getInstance();
+        reader = new XmlReader();
 
-        Writer writer = WriterToJson.getInstance();
+        Writer writer = new WriterToJson();
         writer.writeToFile(PATH_TO_RESULT_JSON_FILE, reader.readFromFile(PATH_TO_CORRECT_XML_FILE));
 
-        reader = JsonReader.getInstance();
+        reader = new JsonReader();
         val dataFromFile = reader.readFromFile(PATH_TO_RESULT_JSON_FILE);
         assertEquals(dataFromFile.size(), COUNT_OF_DISTRICTS_IN_CORRECT_FILE);
     }
