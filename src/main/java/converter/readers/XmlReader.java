@@ -15,24 +15,9 @@ import java.util.List;
 
 @Slf4j
 public class XmlReader implements Reader {
-    private static volatile XmlReader reader = null;
     private final Unmarshaller UNMARSHALLER = JAXBContext.newInstance(DistrictsStoreXml.class).createUnmarshaller();
 
-    public static Reader getInstance() throws JAXBException {
-        XmlReader localInstance = reader;
-        if (localInstance == null) {
-            synchronized (XmlReader.class) {
-                localInstance = reader;
-                if (localInstance == null) {
-                    reader = localInstance = new XmlReader();
-                }
-            }
-        }
-
-        return localInstance;
-    }
-
-    private XmlReader() throws JAXBException {
+    public XmlReader() throws JAXBException {
         log.debug("Создан объект XmlReader");
     }
 

@@ -13,24 +13,9 @@ import java.util.List;
 
 @Slf4j
 public class JsonReader implements Reader {
-    private static volatile JsonReader reader = null;
     private static final Gson GSON_READER = new Gson();
 
-    public static Reader getInstance() {
-        JsonReader localInstance = reader;
-        if (localInstance == null) {
-            synchronized (JsonReader.class) {
-                localInstance = reader;
-                if (localInstance == null) {
-                    reader = localInstance = new JsonReader();
-                }
-            }
-        }
-
-        return localInstance;
-    }
-
-    private JsonReader() {
+    public JsonReader() {
         log.debug("Создан объект JsonReader");
     }
 

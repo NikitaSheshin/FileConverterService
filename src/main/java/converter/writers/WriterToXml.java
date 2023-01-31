@@ -13,32 +13,17 @@ import java.util.List;
 
 @Slf4j
 public class WriterToXml implements Writer {
-    private static volatile WriterToXml writer = null;
     private final Marshaller MARSHALLER = JAXBContext.newInstance(DistrictsStoreXml.class).createMarshaller();
 
-    public static Writer getInstance() throws JAXBException {
-        WriterToXml localInstance = writer;
-        if (localInstance == null) {
-            synchronized (WriterToXml.class) {
-                localInstance = writer;
-                if (localInstance == null) {
-                    writer = localInstance = new WriterToXml();
-                }
-            }
-        }
-
-        return localInstance;
-    }
-
-    private WriterToXml() throws JAXBException {
+    public WriterToXml() throws JAXBException {
         MARSHALLER.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         log.debug("Создан объект WriterToXml");
     }
 
     public void writeToFile(final String fileName, final List<?> districts) throws JAXBException {
         MARSHALLER.marshal(new DistrictsStoreXml(
-                        DistrictsListMapper.instance.toDistrictXmlList((List<DistrictJson>) districts)),
-                new File(fileName));
+                DistrictsListMapper.instance.toDistrictXmlList((List<DistrictJson>) districts)),
+            new File(fileName));
 
         log.debug("Данные записаны в xml файл");
     }
